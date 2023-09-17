@@ -1,0 +1,31 @@
+body {
+    background-color: black;
+    color: white;
+  }
+
+h1, h2, h3{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+a {
+    color: rgb(165, 216, 233);
+    text-decoration: none;
+    font-size: medium;
+}
+
+a {
+    font-weight: bold;
+}
+
+a:visited {
+    color: burlywood;
+}
+
+footer {
+    font-family:  Arial, Helvetica, sans-serif;
+}
