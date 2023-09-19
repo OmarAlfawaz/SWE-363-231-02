@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair Display:wght@400;500;600;700&display=swap');
+body {
+    font-family: 'Playfair Display';
+    
+}
+th {
+    text-transform:uppercase ;
+}
+a {
+    color: rgb(165, 216, 233);
+    text-decoration: none;
+    font-size: medium;
+}
+.top {
+    background-color: goldenrod;
+}
+em {
+    background-color: aqua;
+}
+#the_most_important{
+    text-transform: uppercase;
+    background-color: gold;
+}
