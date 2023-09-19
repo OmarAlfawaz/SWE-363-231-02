@@ -7,13 +7,11 @@ th {
     text-transform:uppercase ;
 }
 a {
-    color: rgb(165, 216, 233);
+    color: blueviolet;
     text-decoration: none;
     font-size: medium;
 }
-.top {
-    background-color: goldenrod;
-}
+
 em {
     background-color: aqua;
 }
@@ -21,3 +19,48 @@ em {
     text-transform: uppercase;
     background-color: gold;
 }
+h1, h2, h3, h4, h5, h6 {
+    text-transform: capitalize;
+  }
+  
+  h2 + p {
+    font-size: x-large;
+  }
+table:hover {
+    background-color: bisque;
+  }
+nav li {
+    display: inline;
+  }
+  nav :first-child a {
+    text-decoration: underline;
+  }
+  
+  nav :not(:first-child) a {
+    text-decoration: none;
+  }
+  table tr:nth-child(3) {
+    background-color: yellowgreen;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: white;
+  }
+  .top {
+    background-color: goldenrod;
+  }
+  ::selection {
+    background-color: yellow;
+  }
+  a:not(nav) :hover {
+    cursor: pointer;
+  }
+  input {
+    height: 20px;
+  }
+  text {
+    border-color: gray;
+  }
+  .massage {
+    height: 50px;
+  }
