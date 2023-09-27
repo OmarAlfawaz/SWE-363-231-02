@@ -1,13 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair Display:wght@400;500;600;700&display=swap');
 body {
-    font-family: 'Playfair Display';
-    
-}
-.Arabic {
-  align-self: center;
-  display: contents;
-  cursor: pointer;
-  
+    font-family: Tajawal;
 }
 th {
     text-transform:uppercase ;
@@ -38,7 +30,6 @@ table:hover {
 nav li {
     display: inline;
     gap: 3rem;
-    
   }
   nav :first-child a {
     text-decoration: underline;
