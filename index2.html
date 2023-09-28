@@ -11,7 +11,11 @@
         <title>Omar Alfawaz website</title>
         <link rel="stylesheet" href="Figma.css">
     </head>
-    <body>
+    
+    <body id="body">
+        <div id="loader">
+            <div id="loader2"></div>
+        </div>
         <header class="headd">
             <nav class="headerNav">
                 <div class="nav-icon">
@@ -165,4 +169,10 @@ Since then, I have been helping my clients to solve user and core business probl
             
         </footer>
     </body>
+    <script>
+        setTimeout(function() {
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('body').style.display = 'block';
+        }, 2000);
+      </script>
 </html>
