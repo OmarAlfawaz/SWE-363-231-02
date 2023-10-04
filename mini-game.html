@@ -18,6 +18,22 @@
         h1 {
             margin-bottom: 0px;
         }
+        #resetButton {
+                background-color: greenyellow; 
+            
+                color: black; 
+                padding: 10px 20px; 
+                font-size: 16px; 
+                border: none; 
+                cursor: pointer; 
+                border-radius: 5px; 
+            }
+
+            #resetButton:hover {
+                background-color: wheat; 
+            }
+        
+        
 
         .cell, .cell.selected {
             font-family: sans-serif;
@@ -73,6 +89,9 @@
             <div class="cell"></div>
             <div class="cell"></div>
         </div>
+        <div>
+            <button id="resetButton">Reset game</button>
+        </div>
         <script>
 
             // decided which turn is it
@@ -87,83 +106,80 @@
             function cellClicked(event) {
                 let cell = event.target
                 let header= document.getElementById("header")
-                //check if cell is selected
-                if (cell.innerText == ""){
-                    cell.classList.add("selected");
-                    addLetter(cell)
-                }
+                addLetter(cell)
+                
             }
 
-            //add letter
-            function addLetter(cell) {
-                cell.innerText = turn
-                if (gameEnded) {
-                    stop;
-                    // HW 
-                } else {
-                    // change turn
-                    turn = turn === "X" ? "O" : "X"
+        let moves = 0;
+        const cells = document.querySelectorAll('.cell');
+        const resetButton = document.getElementById('resetButton');
 
-                    //change title
-                    turnLetter = document.querySelector("#turn span")
-                    turnLetter.innerText = turn
-                    checkPattern()
-                }
+        // Add event listener to each cell
+        cells.forEach(cell => {
+            cell.addEventListener('click', cellClicked);
+        });
+
+        // Click event handler for cells
+        function cellClicked(event) {
+            const cell = event.target;
+
+            if (!cell.classList.contains('selected') && !gameEnded) {
+                addLetter(cell);
+                moves++;
+                checkWinner();
+                toggleTurn();
+                checkDraw();
             }
-            function checkPattern (){
-                const board1 = document.querySelector("div.board");
-                const board2 = board1.querySelectorAll("div.grid > div.cell");
-                // Check for a winning pattern horizontally
-            for (let i = 0; i < 3; i++) {
-                if (
-                board2[i][0].innerText === turn &&
-                board2[i][1].innerText === turn &&
-                board2[i][2].innerText === turn
-                ) {
-                 // Change the header to the winner
-                 header.innerText = turn + "win"
+        }
+
+        // Add letter
+        function addLetter(cell) {
+            cell.innerText = turn;
+            cell.classList.add('selected');
+        }
+
+        // Check for a winning pattern
+        function checkWinner() {
+            const winningCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
+    for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
+            document.querySelector("#turn").innerText = `${turn} wins!`;
+            gameEnded = true;
+        }
+    }
+        }
+
+        function toggleTurn() {
+            turn = turn === "X" ? "O" : "X";
+            document.querySelector("#turn span").innerText = turn;
+        }
+
+        function checkDraw() {
+            if (moves === 9 && !gameEnded) {
+                document.querySelector("#turn").innerText = "Draw!";
                 gameEnded = true;
-                return;
-                }
             }
+        }
 
-            // Check for a winning pattern vertically
-            for (let i = 0; i < 3; i++) {
-                if (
-                board2[0][i].innerText === turn &&
-                board2[1][i].innerText === turn &&
-                board2[2][i].innerText === turn
-                ) {
-               // Change the header to the winner
-               header.innerText = turn + "win"
-                gameEnded = true;
-                return;
-                }
-            }
-
-            // Check for a winning pattern diagonally
-            if (
-                board2[0][0].innerText === turn &&
-                board2[1][1].innerText === turn &&
-                board2[2][2].innerText === turn
-            ) {
-               // Change the header to the winner
-               header.innerText = turn + "win"
-                gameEnded = true;
-                return;
-            }
-
-            if (
-                board2[0][2].innerText === turn &&
-                board2[1][1].innerText === turn &&
-                board2[2][0].innerText === turn
-            ) {
-                // Change the header to the winner
-                header.innerText = turn + "win"
-                gameEnded = true;
-                return;
-                        }
-        }        
+        // Reset the game
+        resetButton.addEventListener('click', () => {
+        cells.forEach(cell => {
+            cell.innerText = "";
+            cell.classList.remove('selected');
+        });
+        turn = "X";
+        document.querySelector("#turn span").innerText = "X";
+        document.querySelector("#header").innerText = "Now it's X's turn"; // Reset the header text
+        document.getElementsByClassName("resetButton").innerText = "Reset game"; // Update the button text
+        moves = 0;
+        gameEnded = false;
+        });
 
         </script>
     </div>
