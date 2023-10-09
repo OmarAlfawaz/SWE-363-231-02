@@ -72,7 +72,7 @@
 <body>
     <h1 id="turn">
         <header id="header">
-            Now it's is <span>X</span> turn
+            <span>Now its X's turn</span>
         </header>
     </h1>
     <p>Use <code>Space</code> to select & <code>Arrows</code> to move</p>
@@ -89,10 +89,17 @@
             <div class="cell"></div>
             <div class="cell"></div>
         </div>
+    </div>
         <div>
-            <button id="resetButton">Reset game</button>
+            <button onclick="resetButton()" id="resetButton">Reset game</button>
         </div>
+        <footer>
+            <nav>
+                <button class="About" ><a href="index2.html"><label>Home</label></a></button>
+            </nav>
+        </footer>
         <script>
+            const span = document.querySelector("#turn span");
 
             // decided which turn is it
             let turn = "X"
@@ -112,7 +119,7 @@
 
         let moves = 0;
         const cells = document.querySelectorAll('.cell');
-        const resetButton = document.getElementById('resetButton');
+      
 
         // Add event listener to each cell
         cells.forEach(cell => {
@@ -125,10 +132,14 @@
 
             if (!cell.classList.contains('selected') && !gameEnded) {
                 addLetter(cell);
-                moves++;
                 checkWinner();
-                toggleTurn();
+                moves++;
                 checkDraw();
+                if (!gameEnded){
+                    toggleTurn();
+                }
+                
+                
             }
         }
 
@@ -149,37 +160,88 @@
     for (const combination of winningCombinations) {
         const [a, b, c] = combination;
         if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
-            document.querySelector("#turn").innerText = `${turn} wins!`;
+            span.innerText = `${turn} wins!`;
             gameEnded = true;
         }
     }
         }
-
+        
         function toggleTurn() {
             turn = turn === "X" ? "O" : "X";
-            document.querySelector("#turn span").innerText = turn;
+            if (turn=="X"){
+                span.innerText="Now its X's turn";
+            }
+            else{
+                span.innerText = "Now its O's turn";
+            }
+            
         }
 
         function checkDraw() {
             if (moves === 9 && !gameEnded) {
-                document.querySelector("#turn").innerText = "Draw!";
+                span.innerText = "Draw!";
                 gameEnded = true;
             }
         }
 
         // Reset the game
-        resetButton.addEventListener('click', () => {
-        cells.forEach(cell => {
+        function resetButton(event) {
+            cells.forEach(cell => {
+            console.log(cell)
             cell.innerText = "";
-            cell.classList.remove('selected');
-        });
-        turn = "X";
-        document.querySelector("#turn span").innerText = "X";
-        document.querySelector("#header").innerText = "Now it's X's turn"; // Reset the header text
-        document.getElementsByClassName("resetButton").innerText = "Reset game"; // Update the button text
-        moves = 0;
-        gameEnded = false;
-        });
+            cell.classList.remove('selected');})
+            turn = "X";
+            span.innerText = "Now it's X's turn";
+            document.getElementsByClassName("resetButton").innerText = "Reset game"; // Update the button text
+            moves = 0;
+            gameEnded = false;
+        }
+        document.addEventListener("keydown", (e) => {
+                e.preventDefault()
+                if (e.code !== "Space"){
+                    moveSelected(e.code);
+                }else{
+                    cell = document.querySelector(".selected")
+                    addLetter(cell)
+                    moves++;
+                    checkWinner();
+                    toggleTurn();
+                    checkDraw();
+                }
+                
+            })
+
+            //kb functions
+            function moveSelected(code) {
+
+                console.log(code)
+
+                //get current selected
+                current = document.querySelector(".selected")
+                next = null
+
+                switch (code) {
+                    case "ArrowRight":
+                        next = current.nextElementSibling
+                        break;
+                    case "ArrowLeft":
+                        next = current.previousElementSibling
+                        break;
+                    case "ArrowDown":
+                        next = current.nextElementSibling.nextElementSibling.nextElementSibling
+                        break;
+                    case "ArrowUp":
+                        next = current.previousElementSibling.previousElementSibling.previousElementSibling
+                        break;
+                }
+
+                //replace class
+                if (next != null) {
+                    current.classList.remove("selected")
+                    next.classList.add("selected")
+                }
+
+            }
 
         </script>
     </div>
