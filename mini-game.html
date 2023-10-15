@@ -35,7 +35,7 @@
         
         
 
-        .cell, .cell.selected {
+        .cell, .cell.selected, .cell.selected1 {
             font-family: sans-serif;
             font-size: larger;
             font-weight: bolder;
@@ -50,7 +50,7 @@
             align-items: center;
         }
         /* add color to selected cells*/
-        .cell.selected{
+        .cell.selected1{
             background-color: chartreuse;
         }
 
@@ -109,14 +109,7 @@
             let board = document.getElementsByClassName("board")[0]
             board.addEventListener("click", cellClicked)
 
-            // clicked event
-            function cellClicked(event) {
-                let cell = event.target
-                let header= document.getElementById("header")
-                addLetter(cell)
-                
-            }
-
+            
         let moves = 0;
         const cells = document.querySelectorAll('.cell');
       
@@ -129,6 +122,7 @@
         // Click event handler for cells
         function cellClicked(event) {
             const cell = event.target;
+            cell.classList.add('selected1')
 
             if (!cell.classList.contains('selected') && !gameEnded) {
                 addLetter(cell);
@@ -189,27 +183,32 @@
             cells.forEach(cell => {
             console.log(cell)
             cell.innerText = "";
-            cell.classList.remove('selected');})
+            cell.classList.remove('selected','selected1');})
             turn = "X";
             span.innerText = "Now it's X's turn";
             document.getElementsByClassName("resetButton").innerText = "Reset game"; // Update the button text
             moves = 0;
             gameEnded = false;
         }
+        //play with keyboard( note that user must click in one cell before start playing with the keyboard)
         document.addEventListener("keydown", (e) => {
                 e.preventDefault()
                 if (e.code !== "Space"){
                     moveSelected(e.code);
                 }else{
-                    cell = document.querySelector(".selected")
-                    addLetter(cell)
-                    moves++;
-                    checkWinner();
+                    cell = next
+                    if (!cell.classList.contains('selected') && !gameEnded) {
+                addLetter(cell);
+                checkWinner();
+                moves++;
+                checkDraw();
+                if (!gameEnded){
                     toggleTurn();
-                    checkDraw();
-                }
-                
-            })
+                }  
+            }
+        }
+            }
+                )
 
             //kb functions
             function moveSelected(code) {
@@ -217,7 +216,7 @@
                 console.log(code)
 
                 //get current selected
-                current = document.querySelector(".selected")
+                current = document.querySelector(".selected1")
                 next = null
 
                 switch (code) {
@@ -237,8 +236,8 @@
 
                 //replace class
                 if (next != null) {
-                    current.classList.remove("selected")
-                    next.classList.add("selected")
+                    current.classList.remove("selected1")
+                    next.classList.add("selected1")
                 }
 
             }
