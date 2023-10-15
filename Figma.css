@@ -408,6 +408,7 @@ small {
     h5, p {
       font-size: 1.5em;
     }
+
     .headd{
       display: flex;
       padding: 0.3rem 2rem;
@@ -415,6 +416,7 @@ small {
       gap: 0.5rem;
       align-self: stretch;
   }
+}
   .headerNav {
       display: flex;
       align-items: flex-start;
@@ -504,9 +506,9 @@ small {
   .date{
     float:right;
 }
-.blog-post img {
+.news img {
   width: 100%;
-  max-width: 1000px;
+  max-width: 700px;
   position: relative;
   top:0;
   left:0;
@@ -535,7 +537,6 @@ small {
 ul {
   padding-left: 0px;;
 }
-.news > *{
-  margin: 12px 0px;
-}
-  }
+
+
+  
