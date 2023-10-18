@@ -8,15 +8,16 @@
         <header>
             <h1 style="text-align: center;">Hire me!</h1>
         </header>
-        <form>
+        <!--redirect the user after submitting the form-->
+        <form id="form" action="Thankyou.html">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputName">Company name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Company name">
+                <input type="text" class="form-control" id="inputName" placeholder="Company name" required>
               </div>
             </div>
             <div class="form-group">
@@ -25,28 +26,27 @@
             </div>
             <div class="form-group">
               <label for="inputAddress2">Address 2</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+              <input type="text" class="form-control" id="inputAddress2" placeholder="">
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputCity">City</label>
                 <input type="text" class="form-control" id="inputCity">
               </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                  <option selected>Choose...</option>
-                  <option>...</option>
-                </select>
-              </div>
+              
               <div class="form-group col-md-2">
                 <label for="inputZip">Zip</label>
                 <input type="text" class="form-control" id="inputZip">
               </div>
             </div>
+            <div class="form-group" >
+              <label style="display: inline;"><h5>sign here</h5></label>
+              <canvas id="2d-canvas" width="200px" height="200px" style="border:solid 2px black"></canvas>
+              <button type="button" id="btnClear" class="btn btn-primary" >Clear</button>
+          </div>
             
             </div>
-            <button type="submit" id="myButton" class="btn btn-primary" onclick="h">Submit</button>
+            <button type="submit" id="myButton" class="btn btn-primary">Submit</button>
           </form>
         <footer>
             <nav>
@@ -62,7 +62,38 @@
     </body>
 </html>
 <script type="text/javascript">
-  document.getElementById("myButton").onclick = function () {
-      location.href = "Thankyou.html";
-  };
+  const signatureCanvas = document.getElementById('2d-canvas');
+  const context = signatureCanvas.getContext('2d');
+  signatureCanvas.addEventListener("mousedown", pointerDown, false);
+  signatureCanvas.addEventListener("mouseup", pointerUp, false);
+  function pointerDown(evt) {
+    context.beginPath();
+    context.moveTo(evt.offsetX, evt.offsetY);
+    signatureCanvas.addEventListener("mousemove", paint, false);
+}
+ 
+function pointerUp(evt) {
+    signatureCanvas.removeEventListener("mousemove", paint);
+    paint(evt);
+}
+ 
+function paint(evt) {
+    context.lineTo(evt.offsetX, evt.offsetY);
+    context.stroke();
+}
+//clear buuton
+const btnClear=document.getElementById("btnClear");
+btnClear.addEventListener("click", function () {
+                context.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            }, false);
+
+document.getElementById("form").addEventListener("submit", function () {
+  // Convert the canvas element to an image.
+  const signatureImage = signatureCanvas.toDataURL();
+  const formData = new FormData();
+  formData.append("email",document.getElementById("inputEmail4").innerText)
+  formData.append("Company",document.getElementById("inputName").innerText)
+  formData.append('signature', signatureImage)
+  console.log(formData.values)
+}, false);
 </script>
