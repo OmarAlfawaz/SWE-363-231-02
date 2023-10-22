@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Fact Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #funFactDisplay {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fun Fact Website</h1>
+    </header>
+    <main>
+        <button id="funFactButton">Show Fun Fact</button>
+        <div id="funFactDisplay"></div>
+    </main>
+    <script>
+         const funFactButton = document.getElementById("funFactButton");
+        // Fun facts array
+        async function loadText(textDiv) {
+            res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en")
+            json = await res.json()
+            console.log(json)
+            textDiv.textContent = json.text
+        }
+        const funFactDisplay = document.getElementById("funFactDisplay");
+        // Event listener for button click
+        funFactButton.addEventListener("click", () => {
+            loadText(funFactDisplay)
+        });
+    </script>
+</body>
+</html>
+
