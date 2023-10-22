@@ -537,6 +537,22 @@ small {
 ul {
   padding-left: 0px;;
 }
+/*style for the screensaver*/
+#screensaver {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black; 
+  display: none; 
+  z-index: 9999;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: o;
+}
 
 
   

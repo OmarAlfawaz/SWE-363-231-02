@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html>
+    
   
     <head>
         <!-- Test comment -->
@@ -32,6 +34,7 @@
                 </div>
             </nav>
         </header>
+        
         <main id="hero">
             <section class="Container">
                 <div class="content">
@@ -172,8 +175,116 @@ Since then, I have been helping my clients to solve user and core business probl
             <br>
             
         </footer>
-    </body>
-    <script>
+        </div>
         
-      </script>
+    </body>
+    <script src="three.min.js"></script>
+    <div id="screensaver">
+         <canvas id="bg"></canvas>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/innerHeight,0.1,1000);
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector('#bg')
+});
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize( window.innerWidth,window.innerHeight);
+camera.position.setZ(30);
+camera.position.setX(-3);
+
+renderer.render( scene, camera);
+
+const geometry = new THREE.TorusGeometry(10,3,16,100);
+const material = new THREE.MeshStandardMaterial({color:0xFF6347});
+const torus = new THREE.Mesh( geometry, material)
+
+//scene.add(torus)
+
+const pointLight= new THREE.PointLight(0xffffff)
+pointLight.position.set(5,5,5)
+
+const ambientLight= new THREE.AmbientLight(0xffffff)
+scene.add(pointLight,ambientLight)
+
+const earthTexture = new THREE.TextureLoader().load('assets/Earth1.jpg');
+const earthDetails= new THREE.TextureLoader().load('assets/EarthDetails.jpg');
+
+
+const earth = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: earthTexture,
+    bumpMap: earthDetails,
+    bumpScale: 0.05
+
+  })
+);
+
+scene.add(earth);
+
+
+
+
+function addStar() {
+  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geometry, material);
+
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
+}
+
+Array(200).fill().forEach(addStar);
+
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    //torus.rotation.x +=0.01;
+    //torus.rotation.y +=0.005;
+    //torus.rotation.z +=0.01;
+
+
+    earth.rotation.x += 0.005;
+    earth.rotation.y+=0.005;
+    earth.rotation.z+=0.005
+    renderer.render(scene, camera);
+}
+animate()
+
+//code to track the activety of the user
+const screensaver = document.getElementById('screensaver');
+
+// Function to show the screensaver
+function showScreensaver() {
+    screensaver.style.display = 'flex';
+   
+}
+function hideScreensaver() {
+    screensaver.style.display = 'none';
+}
+let inactivityTimer;
+// Start a timer for inactivity
+function startInactivityTimer() {
+    inactivityTimer = setTimeout(() => {
+        showScreensaver();
+    }, 60000); //(1 minute)
+}
+// Reset the timer on user interaction
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    startInactivityTimer();
+    hideScreensaver()
+}
+ 
+// Add event listeners for user interaction (e.g., mousemove, keydown) to reset the timer
+window.addEventListener('mousemove', resetInactivityTimer);
+window.addEventListener('keydown', resetInactivityTimer);
+startInactivityTimer();
+    </script>
 </html>
