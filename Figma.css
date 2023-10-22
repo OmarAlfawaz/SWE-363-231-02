@@ -307,6 +307,9 @@ footer {
     font-weight: 600;
     line-height: 1.25rem; /* 142.857% */
 }
+a {
+  text-decoration: none;
+}
 .footer2 {
     display: flex;
     padding: 2rem 2rem 0rem 2rem;
