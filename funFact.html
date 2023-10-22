@@ -45,7 +45,6 @@
     </main>
     <script>
          const funFactButton = document.getElementById("funFactButton");
-        // Fun facts array
         async function loadText(textDiv) {
             res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en")
             json = await res.json()
