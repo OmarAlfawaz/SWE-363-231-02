@@ -37,13 +37,11 @@ const posts =
   
     return div;
   };
+
+  const postElements = posts.map((post) => createPostElement(post));
   
-  const appendPostsToPage = (posts) => {
     const postsContainer = document.querySelector("#posts");
-    posts.forEach((post) => {
-      const postElement = createPostElement(post);
-      postsContainer.appendChild(postElement);
-    });
-  };
-  
-  appendPostsToPage(posts);
+    postElements.reduce((container, element) => {
+        container.appendChild(element);
+        return container;
+    }, postsContainer);
