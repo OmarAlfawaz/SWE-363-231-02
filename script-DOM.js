@@ -38,34 +38,34 @@ class NewsPost {
     }
   }
 
-for (const post of posts) { 
-    let div = document.createElement("div");
+  const createPostElement = (post) => {
+    const div = document.createElement("div");
     div.classList.add("news");
-  
-    let content = document.createElement("div");
+    const content = document.createElement("div");
     content.classList.add("Brief1Content");
-  
-    let img = document.createElement("img");
-    let title = document.createElement("h5");
-    let brief = document.createElement("p");
+    const img = document.createElement("img");
+    const title = document.createElement("h5");
+    const brief = document.createElement("p");
     img.alt = "Sample Image";
-    const x= new NewsPost(post.src,post.date,post.title,post.brief);
+    img.src = post.src;
   
-    img.src = x.src;
-    title.innerText=x.title;
-    brief.innerText=x.brief;
-    date=x.date;
-
+    title.innerText = post.title;
+    brief.innerText = post.brief;
+  
     content.appendChild(brief);
-    //div2.appendChild(content)
-    //div2.appendChild(img)
-    div.appendChild(title)
-    //div.appendChild(div2)
-    div.appendChild(content)
-    div.appendChild(img)
-    
-    //div.appendChild(date)
-    document.querySelector("#posts").appendChild(div)
-  }
-
-
+    div.appendChild(title);
+    div.appendChild(content);
+    div.appendChild(img);
+  
+    return div;
+  };
+  
+  const appendPostsToPage = (posts) => {
+    const postsContainer = document.querySelector("#posts");
+    posts.forEach((post) => {
+      const postElement = createPostElement(post);
+      postsContainer.appendChild(postElement);
+    });
+  };
+  
+  appendPostsToPage(posts);
