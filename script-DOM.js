@@ -29,27 +29,32 @@ const posts =
        
     }
 ]
-
+class NewsPost {
+    constructor(src, date, title, brief) {
+      this.src = src;
+      this.date = date;
+      this.title = title;
+      this.brief = brief;
+    }
+  }
 
 for (const post of posts) { 
-    let div = document.createElement("div")
-    div.classList.add("news")
-    //let div2 = document.createElement("div")
-    //div2.classList.add("Brief1H")
-    let content = document.createElement("div")
-    content.classList.add("Brief1Content")
-   
-    let img = document.createElement("img")
-    let title=document.createElement("h5")
-    let brief=document.createElement("p")
-    let date=document.createElement("div")
-    date.classList.add("date")
+    let div = document.createElement("div");
+    div.classList.add("news");
+  
+    let content = document.createElement("div");
+    content.classList.add("Brief1Content");
+  
+    let img = document.createElement("img");
+    let title = document.createElement("h5");
+    let brief = document.createElement("p");
     img.alt = "Sample Image";
-    //console.log(post)
-    img.src = post.src;
-    title.innerText=post.title;
-    brief.innerText=post.brief;
-    date=new Date(post.date);
+    const x= new NewsPost(post.src,post.date,post.title,post.brief);
+  
+    img.src = x.src;
+    title.innerText=x.title;
+    brief.innerText=x.brief;
+    date=x.date;
 
     content.appendChild(brief);
     //div2.appendChild(content)
