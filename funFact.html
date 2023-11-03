@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <title>Fun Fact Website</title>
     <style>
         body {
@@ -36,14 +40,17 @@
     </style>
 </head>
 <body>
+    
     <header>
         <h1>Fun Fact Website</h1>
     </header>
     <main>
         <button id="funFactButton">Show Fun Fact</button>
         <div id="funFactDisplay"></div>
+        <div id="test"></div>
     </main>
     <script>
+        
          const funFactButton = document.getElementById("funFactButton");
         async function loadText(textDiv) {
             res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en")
@@ -57,6 +64,12 @@
             loadText(funFactDisplay)
         });
     </script>
+    <script type="text/babel">
+        function Greeting() {
+            return <h1>Hello, React!</h1>;
+        }
+        ReactDOM.render(<Greeting />, document.getElementById('test'));
+        </script>
 </body>
 </html>
 
