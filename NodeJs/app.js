@@ -13,3 +13,6 @@ const sayHi= (name) =>{
     console.log(`my name is ${name}`)
 }
 sayHi("omar")
+
+const os= require('os')
+console.log(`the system uptime ${os.uptime()}seconds`)
