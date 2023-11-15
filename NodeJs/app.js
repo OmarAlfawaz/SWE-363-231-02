@@ -1,18 +1,24 @@
-const amount =9
+const UserEventEmitter = require('./eventemitter');
+const users = [
+  { id: 1, name: 'Omar Alfawaz' },
+  { id: 2, name: 'Ali Ahmad' },
+  { id: 3, name: 'Salem Khaled' },
+];
 
-if (amount<10){
-    console.log('small number ')
-}
-else{
-    console.log('large number')
-}
+const eventEmitter = new UserEventEmitter();
 
-console.log('hey it"s my first program')
-//console.log(process)
-const sayHi= (name) =>{
-    console.log(`my name is ${name}`)
-}
-sayHi("omar")
+setInterval(() => {
+  const user = users[Math.floor(Math.random() * users.length)];
+  eventEmitter.emit('userLoggedIn', user);
+  setTimeout(() => {
+    eventEmitter.emit('userLoggedOut', user);
+  }, Math.random() * 2000 + 1000);
+}, 1000);
 
-const os= require('os')
-console.log(`the system uptime ${os.uptime()}seconds`)
+eventEmitter.on('userLoggedIn', (user) => {
+  console.log(`TIMESTAMP: USER ${user.name} logged in`);
+});
+
+eventEmitter.on('userLoggedOut', (user) => {
+  console.log(`TIMESTAMP: USER ${user.name} logged out`);
+});
